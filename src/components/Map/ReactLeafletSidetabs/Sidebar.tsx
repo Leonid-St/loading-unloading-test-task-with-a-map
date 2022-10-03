@@ -1,5 +1,5 @@
+import { Map } from 'leaflet'
 import React, { useEffect } from 'react'
-// import { PropTypes } from 'prop-types'
 import MenuButton from './MenuButton'
 import './sidebar.scss'
 
@@ -18,7 +18,7 @@ const widths = [
 
 interface ISidebar {
   id: string;
-  map: Object;
+  map: Map;
   collapsed: boolean;
   position: 'left' | 'right';
   selected: string | boolean;
@@ -75,10 +75,10 @@ const Sidebar: React.FC<ISidebar> = ({
 
     }
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  const onCloseFun = (e: any) => {
+  const onCloseFun = (e: React.SyntheticEvent) => {
     e.preventDefault()
     e.stopPropagation()
     if (onClose) {
@@ -88,14 +88,16 @@ const Sidebar: React.FC<ISidebar> = ({
       if (map) {
         const offset = getOffset();
         if (offset)
-          (map as any).panBy([offset / 2, 0], { duration: 0.5 })
+          map.panBy([offset / 2, 0], { duration: 0.5 })
       } else {
         console.error(`react-leaflet-sidetabs: 'panMapOnChange' prop requires that 'map' prop is provided, 'map' prop not provided`)
       }
     }
   }
 
-  const onOpenFun = (e: any, tabid: any) => {
+  const onOpenFun = (e: React.SyntheticEvent, tabid: string) => {
+    console.log(e);
+    console.log(tabid);
     e.preventDefault()
     e.stopPropagation()
     if (onOpen) {
@@ -105,7 +107,7 @@ const Sidebar: React.FC<ISidebar> = ({
       if (map) {
         const offset = getOffset();
         if (offset)
-          (map as any).panBy([-offset / 2, 0], { duration: 0.5 })
+          map.panBy([-offset / 2, 0], { duration: 0.5 })
       } else {
         console.error(`react-leaflet-sidetabs: 'panMapOnChange' prop requires that 'map' prop is provided, 'map' prop not provided`)
       }
@@ -135,9 +137,11 @@ const Sidebar: React.FC<ISidebar> = ({
         active: p.props.id === selected,
         position: position || 'left'
       })
+
     }
 
     )
+
   }
 
   const localPosition = ` sidebar-${position || 'left'}`
@@ -145,8 +149,6 @@ const Sidebar: React.FC<ISidebar> = ({
   const tabs = React.Children.toArray(children)
   const bottomtabs = tabs.filter(t => (t as any)?.anchor === 'bottom')
   const toptabs = tabs.filter(t => (t as any)?.anchor !== 'bottom')
-  console.log(tabs);
-
 
   return (
 
@@ -156,7 +158,7 @@ const Sidebar: React.FC<ISidebar> = ({
       ref={el => {
         rootElement = el
       }}
-      style={{height:"100%",}}
+      style={{ height: "100%" }}
     >
       <div className='sidebar-tabs'>
         <ul role='tablist'>
@@ -175,6 +177,7 @@ const Sidebar: React.FC<ISidebar> = ({
           })}
         </ul>
         <ul role='tablist'>
+          {/**for what in test task ? I don't know, let it be.  */}
           {bottomtabs.map((t: any) =>
             <MenuButton
               key={t.props.id}
@@ -189,9 +192,9 @@ const Sidebar: React.FC<ISidebar> = ({
         </ul>
       </div>
       <div className='sidebar-content'>
-        {renderPanes(children)}
-      </div>
+      {renderPanes(children)}
     </div>
+    </div >
 
   )
 }

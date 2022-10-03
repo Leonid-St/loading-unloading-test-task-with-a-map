@@ -1,15 +1,16 @@
-import React from 'react'
-// import { PropTypes } from 'prop-types'
+import React, { ReactElement } from 'react'
+import { IconType } from 'react-icons/lib';
 
-interface ITab {
+export interface ITab {
   id: string;
-  header: string;
+  header?: string;
   children: Function | JSX.Element | Object | Array<React.ReactNode> | React.ReactNode | any
-  onClose: ()=> void,
+  onClose?: ()=> void,
   active: boolean;
+  icon : IconType | ReactElement<any, any>;
 }
 
-const Tab : any = (props : ITab) => {
+const Tab  = (props : ITab) => {
   const active = props.active ? ' active' : ''
   const closeIcon = CloseIconSelector((props as any))
 

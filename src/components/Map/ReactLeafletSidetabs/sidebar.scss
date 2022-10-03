@@ -1,6 +1,5 @@
 @import "./variables.scss";
 
-
 .leaflet-control-zoom-in,
 .leaflet-control-zoom-out {
   float: right;
@@ -19,8 +18,6 @@
 .sidebar.collapsed {
   width: 40px;
 }
-
-
 
 .sidebar-tabs {
   top: 0;
@@ -129,7 +126,8 @@
   left: 0;
   right: 0;
   box-sizing: border-box;
-  padding: 10px 20px;
+  padding-top: 10px;
+  min-width: 484px;
 }
 
 .sidebar-pane.active {
@@ -187,7 +185,7 @@
 
 @media (min-width: 992px) and (max-width: 1199px) {
   .sidebar-pane {
-    min-width: 350px;
+    min-width: 400px;
   }
   .sidebar-left ~ .sidebar-map .leaflet-left {
     left: 400px;
@@ -271,4 +269,3 @@
     margin-bottom: 0;
   }
 }
-

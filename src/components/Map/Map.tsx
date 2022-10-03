@@ -8,10 +8,11 @@ import { RouteLine } from './PolyLineRoute';
 import { FETCH_ROUTING_ACTION } from '../../store/orders/sagas';
 import { ScaleControl } from 'react-leaflet';
 import useWindowDimensions from '../../hooks/useWindowDemension';
+import { Map as leafletMan } from 'leaflet';
 
 type Props = {
   sizes?: { width: number; height: number };
-  setMap: any;
+  setMap: ((map: leafletMan) => void) | undefined;
 };
 
 export const Map: FC<Props> = ({ sizes, setMap }) => {
@@ -26,7 +27,7 @@ export const Map: FC<Props> = ({ sizes, setMap }) => {
   }, [dispatch, selectedOrder]);
 
   return (
-    <div style={{ width: width, height: height-HEIGHT_PADDING*1.5 }}>
+    <div style={{ width: width, height: height - HEIGHT_PADDING * 1.5 }}>
       <MapContainer className="map" center={DEFAULT_CENTER} zoom={DEFAULT_ZOOM} zoomControl={false}
         whenCreated={setMap}
       >

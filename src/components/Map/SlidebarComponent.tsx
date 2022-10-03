@@ -1,3 +1,4 @@
+import { Map } from 'leaflet';
 import { Resizable } from 're-resizable';
 import React, { useState } from 'react'
 import { FiChevronLeft, FiCompass } from "react-icons/fi";
@@ -5,7 +6,10 @@ import useWindowDimensions from '../../hooks/useWindowDemension';
 import { OrdersTable } from '../OrdersTable/OrdersTable';
 import { Sidebar, Tab } from './ReactLeafletSidetabs'
 
-const SidebarComponent = ({ map }: any) => {
+interface ISidebarComponent {
+  map: Map;
+}
+const SidebarComponent = ({ map }: ISidebarComponent) => {
 
   const [openTab, setOpenTab] = useState<boolean | string>('home')
 
@@ -13,7 +17,7 @@ const SidebarComponent = ({ map }: any) => {
     setOpenTab(false)
   }
 
-  const onOpen = (id: any) => {
+  const onOpen = (id: string) => {
     setOpenTab(id)
   }
   const { height, width } = useWindowDimensions();
@@ -22,9 +26,8 @@ const SidebarComponent = ({ map }: any) => {
 
     <section className="Sidebar">
       <Resizable
-        //style={}}
         size={{ width: state.width, height: state.height, }}
-        style={{zIndex: 500, position: 'absolute'}}
+        style={{ zIndex: 500, position: 'absolute' }}
         onResizeStop={(e, direction, ref, d) => {
           setState({
             width: state.width + d.width, height: state.height + d.height,

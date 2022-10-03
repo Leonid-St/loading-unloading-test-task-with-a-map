@@ -1,13 +1,13 @@
+import { Map } from 'leaflet'
 import React from 'react'
-// import { PropTypes } from 'prop-types'
 
-const MenuButton = (props: any) => {
+const MenuButton = (props: IMenuButton) => {
   const icon =
     props.icon === 'string' ? <i className={props.icon} /> : props.icon
   const active = props.id === props.selected && !props.collapsed ? ' active' : ''
   const disabled = props.disabled ? ' disabled' : ''
 
-  const onClick = (e: any, id: any) => {
+  const onClick = (e: React.SyntheticEvent, id: string) => {
     if (!props.disabled) {
       if (props.collapsed) {
         props.onOpen(e, id)
@@ -32,14 +32,16 @@ const MenuButton = (props: any) => {
   )
 }
 
-// MenuButton.propTypes = {
-//   id: PropTypes.string.isRequired,
-//   icon: PropTypes.oneOfType([PropTypes.string, PropTypes.element]).isRequired,
-//   disabled: PropTypes.bool,
-//   selected: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
-//   onOpen: PropTypes.func,
-//   onClose: PropTypes.func,
-//   collapsed: PropTypes.bool
-// }
+
+interface IMenuButton {
+  id: string;
+  icon: string | JSX.Element;
+  disabled: boolean;
+  selected: string | boolean;
+  onOpen: Function;
+  onClose: Function;
+  collapsed: boolean;
+  map:Map;
+}
 
 export default MenuButton
